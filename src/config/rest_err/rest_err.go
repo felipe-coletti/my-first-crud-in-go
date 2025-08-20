@@ -18,52 +18,42 @@ func (r *RestErr) Error() string {
 	return r.Message
 }
 
-func NewRestErr(message string, err string, code int, causes []Causes) *RestErr {
-	return &RestErr{
-		Message: message,
-		Err:     err,
-		Code:    code,
-		Causes:  causes,
-	}
+var errorTypes = map[string]struct {
+	code int
+	err  string
+}{
+	"bad_request": {
+		code: http.StatusBadRequest,
+		err:  "bad_request",
+	},
+	"internal_server_error": {
+		code: http.StatusInternalServerError,
+		err:  "internal_server_error",
+	},
+	"not_found": {
+		code: http.StatusNotFound,
+		err:  "not_found",
+	},
+	"forbidden": {
+		code: http.StatusForbidden,
+		err:  "forbidden",
+	},
 }
 
-func NewBadRequestError(message string) *RestErr {
-	return &RestErr{
-		Message: message,
-		Err:     "bad_request",
-		Code:    http.StatusBadRequest,
+func NewRestErr(errorType, message string, causes []Causes) *RestErr {
+	if et, ok := errorTypes[errorType]; ok {
+		return &RestErr{
+			Message: message,
+			Err:     et.err,
+			Code:    et.code,
+			Causes:  causes,
+		}
 	}
-}
 
-func NewBadRequestValidationError(message string, causes []Causes) *RestErr {
-	return &RestErr{
-		Message: message,
-		Err:     "bad_request",
-		Code:    http.StatusBadRequest,
-		Causes:  causes,
-	}
-}
-
-func NewInternalServerError(message string) *RestErr {
 	return &RestErr{
 		Message: message,
 		Err:     "internal_server_error",
 		Code:    http.StatusInternalServerError,
-	}
-}
-
-func NewNotFoundError(message string) *RestErr {
-	return &RestErr{
-		Message: message,
-		Err:     "not_found",
-		Code:    http.StatusNotFound,
-	}
-}
-
-func NewForbiddenError(message string) *RestErr {
-	return &RestErr{
-		Message: message,
-		Err:     "bad_request",
-		Code:    http.StatusForbidden,
+		Causes:  causes,
 	}
 }
