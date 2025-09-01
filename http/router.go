@@ -6,7 +6,7 @@ import (
 )
 
 func InitRoutes(r *gin.RouterGroup) {
-	r.GET("/users", user.FindAll)
+	r.GET("/users", user.FindAllUsers)
 	r.GET("/users/:username", user.FindUserByUsername)
 	r.GET("/users/me", user.FindMe)
 	r.POST("/users", user.CreateUser)
