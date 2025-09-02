@@ -32,17 +32,22 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	response := UserResponse{
-		ID: "test",
-		DisplayName: request.DisplayName,
-		Username: request.Username,
+	domain := NewUserDomain(
+		request.DisplayName,
+		request.Username,
+		request.Email,
+		request.Password,
+	)
+
+	if err := domain.CreateUser(); err != nil {
+		c.JSON(err.Code, err)
 	}
 
 	logger.Info("User created successfully",
 		zap.String("journey", "createUser"),
 	)
 
-	c.JSON(http.StatusOK, response)
+	c.String(http.StatusOK, "")
 }
 
 func UpdateMe(c *gin.Context) {}
