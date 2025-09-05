@@ -39,7 +39,9 @@ func CreateUser(c *gin.Context) {
 		request.Password,
 	)
 
-	if err := domain.CreateUser(); err != nil {
+	service := NewUserService()
+
+	if err := service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
 	}
 
