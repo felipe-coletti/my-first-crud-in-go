@@ -5,24 +5,24 @@ import (
 
 	"github.com/felipe-coletti/my-first-crud-in-go/src/config/logger"
 	"github.com/felipe-coletti/my-first-crud-in-go/src/config/validation"
-	"github.com/felipe-coletti/my-first-crud-in-go/src/model"
+	"github.com/felipe-coletti/my-first-crud-in-go/src/model/domain"
 	"github.com/felipe-coletti/my-first-crud-in-go/src/model/request"
-	"github.com/felipe-coletti/my-first-crud-in-go/src/model/service"
+	"github.com/felipe-coletti/my-first-crud-in-go/src/view"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 var (
-	UserDomainInterface model.UserDomainInterface
+	UserDomainInterface domain.UserDomainInterface
 )
 
-func FindAllUsers(c *gin.Context) {}
+func (userController *userController) FindAllUsers(c *gin.Context) {}
 
-func FindUserByUsername(c *gin.Context) {}
+func (userController *userController) FindUserByUsername(c *gin.Context) {}
 
-func FindMe(c *gin.Context) {}
+func (userController *userController) FindMe(c *gin.Context) {}
 
-func CreateUser(c *gin.Context) {
+func (userController *userController) CreateUser(c *gin.Context) {
 	logger.Info("Init CreateUser in user handler",
 		zap.String("journey", "createUser"),
 	)
@@ -40,16 +40,14 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	domain := model.NewUserDomain(
+	domain := domain.NewUserDomain(
 		userRequest.DisplayName,
 		userRequest.Username,
 		userRequest.Email,
 		userRequest.Password,
 	)
 
-	service := service.NewUserService()
-
-	if err := service.CreateUser(domain); err != nil {
+	if err := userController.service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
 	}
 
@@ -57,9 +55,9 @@ func CreateUser(c *gin.Context) {
 		zap.String("journey", "createUser"),
 	)
 
-	c.String(http.StatusOK, "")
+	c.JSON(http.StatusOK, view.ToUserResponse(domain))
 }
 
-func UpdateMe(c *gin.Context) {}
+func (userController *userController) UpdateMe(c *gin.Context) {}
 
-func DeleteMe(c *gin.Context) {}
+func (userController *userController) DeleteMe(c *gin.Context) {}

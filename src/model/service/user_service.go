@@ -5,30 +5,30 @@ import (
 
 	"github.com/felipe-coletti/my-first-crud-in-go/src/config/logger"
 	"github.com/felipe-coletti/my-first-crud-in-go/src/config/rest_err"
-	"github.com/felipe-coletti/my-first-crud-in-go/src/model"
+	"github.com/felipe-coletti/my-first-crud-in-go/src/model/domain"
 	"go.uber.org/zap"
 )
 
-func (us *userService) FindUser(userId string) (*model.UserDomainInterface, *rest_err.RestErr) {
+func (userService *userService) FindUser(userId string) (*domain.UserDomainInterface, *rest_err.RestErr) {
 	return nil, nil
 }
 
-func (us *userService) CreateUser(userDomain model.UserDomainInterface) *rest_err.RestErr {
+func (userService *userService) CreateUser(domainInterface domain.UserDomainInterface) *rest_err.RestErr {
 	logger.Info("Init CreateUser in user domain",
 		zap.String("journey", "createUser"),
 	)
 
-	userDomain.EncryptPassword()
+	domainInterface.EncryptPassword()
 
-	fmt.Println(userDomain.GetPassword())
+	fmt.Println(domainInterface.GetPassword())
 
 	return nil
 }
 
-func (us *userService) UpdateUser(userId string, userDomain model.UserDomainInterface) *rest_err.RestErr {
+func (userService *userService) UpdateUser(userId string, domainInterface domain.UserDomainInterface) *rest_err.RestErr {
 	return nil
 }
 
-func (us *userService) DeleteUser(userId string) *rest_err.RestErr {
+func (userService *userService) DeleteUser(userId string) *rest_err.RestErr {
 	return nil
 }
