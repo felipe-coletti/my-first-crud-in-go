@@ -8,13 +8,32 @@ import (
 	"go.uber.org/zap"
 )
 
-func FindAllUsers(c *gin.Context) {}
+type UserHandlerInterface interface {
+	FindAllUsers(c *gin.Context)
+	FindUserByUsername(c *gin.Context)
+	FindMe(c *gin.Context)
+	CreateUser(c *gin.Context)
+	UpdateMe(c *gin.Context)
+	DeleteMe(c *gin.Context)
+}
 
-func FindUserByUsername(c *gin.Context) {}
+type userHandler struct {
+	service UserServiceInterface
+}
 
-func FindMe(c *gin.Context) {}
+func NewUserHandler(serviceInterface UserServiceInterface) UserHandlerInterface {
+	return &userHandler{
+		service: serviceInterface,
+	}
+}
 
-func CreateUser(c *gin.Context) {
+func (userHandler *userHandler) FindAllUsers(c *gin.Context) {}
+
+func (userHandler *userHandler) FindUserByUsername(c *gin.Context) {}
+
+func (userHandler *userHandler) FindMe(c *gin.Context) {}
+
+func (userHandler *userHandler) CreateUser(c *gin.Context) {
 	logger.Info("Init CreateUser in user handler",
 		zap.String("journey", "createUser"),
 	)
@@ -39,9 +58,7 @@ func CreateUser(c *gin.Context) {
 		request.Password,
 	)
 
-	service := NewUserService()
-
-	if err := service.CreateUser(domain); err != nil {
+	if err := userHandler.service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
 	}
 
@@ -49,9 +66,9 @@ func CreateUser(c *gin.Context) {
 		zap.String("journey", "createUser"),
 	)
 
-	c.String(http.StatusOK, "")
+	c.JSON(http.StatusOK, ToUserResponse(domain))
 }
 
-func UpdateMe(c *gin.Context) {}
+func (userHandler *userHandler) UpdateMe(c *gin.Context) {}
 
-func DeleteMe(c *gin.Context) {}
+func (userHandler *userHandler) DeleteMe(c *gin.Context) {}

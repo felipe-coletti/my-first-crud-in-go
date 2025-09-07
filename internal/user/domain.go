@@ -34,28 +34,28 @@ func NewUserDomain(
 	}
 }
 
-func (ud *userDomain) GetDisplayName() string {
-	return ud.displayName
+func (userDomain *userDomain) GetDisplayName() string {
+	return userDomain.displayName
 }
 
-func (ud *userDomain) GetUsername() string {
-	return ud.username
+func (userDomain *userDomain) GetUsername() string {
+	return userDomain.username
 }
 
-func (ud *userDomain) GetEmail() string {
-	return ud.email
+func (userDomain *userDomain) GetEmail() string {
+	return userDomain.email
 }
 
-func (ud *userDomain) GetPassword() string {
-	return ud.password
+func (userDomain *userDomain) GetPassword() string {
+	return userDomain.password
 }
 
-func (ud *userDomain) EncryptPassword() {
+func (userDomain *userDomain) EncryptPassword() {
 	hash := md5.New()
 
 	defer hash.Reset()
 
-	hash.Write([]byte(ud.password))
+	hash.Write([]byte(userDomain.password))
 
-	ud.password = hex.EncodeToString(hash.Sum(nil))
+	userDomain.password = hex.EncodeToString(hash.Sum(nil))
 }

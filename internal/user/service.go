@@ -13,32 +13,30 @@ type UserServiceInterface interface {
 	DeleteUser(string) *errors.RestErr
 }
 
-type userService struct {
-
-}
+type userService struct {}
 
 func NewUserService() UserServiceInterface {
 	return &userService{}
 }
 
-func (us *userService) FindUser(userId string) (*UserDomainInterface, *errors.RestErr) {
+func (userService *userService) FindUser(userId string) (*UserDomainInterface, *errors.RestErr) {
 	return nil, nil
 }
 
-func (us *userService) CreateUser(userDomain UserDomainInterface) *errors.RestErr {
+func (userService *userService) CreateUser(domainInterface UserDomainInterface) *errors.RestErr {
 	logger.Info("Init CreateUser in user domain",
 		zap.String("journey", "createUser"),
 	)
 
-	userDomain.EncryptPassword()
+	domainInterface.EncryptPassword()
 
 	return nil
 }
 
-func (us *userService) UpdateUser(userId string, userDomain UserDomainInterface) *errors.RestErr {
+func (userService *userService) UpdateUser(userId string, domainInterface UserDomainInterface) *errors.RestErr {
 	return nil
 }
 
-func (us *userService) DeleteUser(userId string) *errors.RestErr {
+func (userService *userService) DeleteUser(userId string) *errors.RestErr {
 	return nil
 }

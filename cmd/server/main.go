@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/felipe-coletti/my-first-crud-in-go/http"
+	"github.com/felipe-coletti/my-first-crud-in-go/internal/user"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -16,9 +17,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	service := user.NewUserService()
+	userHandler := user.NewUserHandler(service)
+
 	router := gin.Default()
 
-	http.InitRoutes(&router.RouterGroup)
+	http.InitRoutes(&router.RouterGroup, userHandler)
 
 	if err := router.Run(os.Getenv("PORT")); err != nil {
 		log.Fatal(err)
