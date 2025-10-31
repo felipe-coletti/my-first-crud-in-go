@@ -1,11 +1,10 @@
-package http
+package user
 
 import (
-	"github.com/felipe-coletti/my-first-crud-in-go/internal/user"
 	"github.com/gin-gonic/gin"
 )
 
-func InitRoutes(r *gin.RouterGroup, userHandler user.UserHandlerInterface) {
+func InitRoutes(r *gin.RouterGroup, userHandler UserHandlerInterface) {
 	r.GET("/users", userHandler.FindAllUsers)
 	r.GET("/users/:username", userHandler.FindUserByUsername)
 	r.GET("/users/me", userHandler.FindMe)

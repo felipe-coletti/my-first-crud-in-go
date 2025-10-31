@@ -3,6 +3,7 @@ package user
 import (
 	"net/http"
 
+	"github.com/felipe-coletti/my-first-crud-in-go/internal/user"
 	"github.com/felipe-coletti/my-first-crud-in-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -18,10 +19,10 @@ type UserHandlerInterface interface {
 }
 
 type userHandler struct {
-	service UserServiceInterface
+	service user.UserServiceInterface
 }
 
-func NewUserHandler(serviceInterface UserServiceInterface) UserHandlerInterface {
+func NewUserHandler(serviceInterface user.UserServiceInterface) UserHandlerInterface {
 	return &userHandler{
 		service: serviceInterface,
 	}
@@ -37,21 +38,21 @@ func (userHandler *userHandler) CreateUser(c *gin.Context) {
 	logger.Info("Init CreateUser in user handler",
 		zap.String("journey", "createUser"),
 	)
-	var request UserRequest
+	var request user.UserRequest
 
 	if err := c.ShouldBindJSON(&request); err != nil {
 		logger.Error("Error trying to validate user info", err,
 			zap.String("journey", "createUser"),
 		)
 
-		restErr := ValidateUserError(err)
+		restErr := user.ValidateUserError(err)
 
 		c.JSON(restErr.Code, restErr)
 
 		return
 	}
 
-	domain := NewUserDomain(
+	domain := user.NewUserDomain(
 		request.DisplayName,
 		request.Username,
 		request.Email,
@@ -66,7 +67,7 @@ func (userHandler *userHandler) CreateUser(c *gin.Context) {
 		zap.String("journey", "createUser"),
 	)
 
-	c.JSON(http.StatusOK, ToUserResponse(domain))
+	c.JSON(http.StatusOK, user.ToUserResponse(domain))
 }
 
 func (userHandler *userHandler) UpdateMe(c *gin.Context) {}
