@@ -1,6 +1,6 @@
 package user
 
-import "github.com/felipe-coletti/my-first-crud-in-go/internal/user"
+import "my-first-crud-in-go/internal/user"
 
 type UserRequest struct {
 	DisplayName string `json:"display_name" binding:"required"`

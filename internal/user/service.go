@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/felipe-coletti/my-first-crud-in-go/pkg/errors"
-	"github.com/felipe-coletti/my-first-crud-in-go/pkg/logger"
+	"my-first-crud-in-go/pkg/errors"
+	"my-first-crud-in-go/pkg/logger"
 	"go.uber.org/zap"
 )
 

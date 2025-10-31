@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	userDomain "github.com/felipe-coletti/my-first-crud-in-go/internal/user"
-	userHTTP "github.com/felipe-coletti/my-first-crud-in-go/http/user"
+	userDomain "my-first-crud-in-go/internal/user"
+	userHTTP "my-first-crud-in-go/http/user"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )

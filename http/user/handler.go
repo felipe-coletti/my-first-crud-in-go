@@ -3,8 +3,8 @@ package user
 import (
 	"net/http"
 
-	"github.com/felipe-coletti/my-first-crud-in-go/internal/user"
-	"github.com/felipe-coletti/my-first-crud-in-go/pkg/logger"
+	"my-first-crud-in-go/internal/user"
+	"my-first-crud-in-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
