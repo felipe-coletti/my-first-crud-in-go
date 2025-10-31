@@ -38,7 +38,7 @@ func (userHandler *userHandler) CreateUser(c *gin.Context) {
 	logger.Info("Init CreateUser in user handler",
 		zap.String("journey", "createUser"),
 	)
-	var request user.UserRequest
+	var request UserRequest
 
 	if err := c.ShouldBindJSON(&request); err != nil {
 		logger.Error("Error trying to validate user info", err,
@@ -67,7 +67,7 @@ func (userHandler *userHandler) CreateUser(c *gin.Context) {
 		zap.String("journey", "createUser"),
 	)
 
-	c.JSON(http.StatusOK, user.ToUserResponse(domain))
+	c.JSON(http.StatusOK, ToUserResponse(domain))
 }
 
 func (userHandler *userHandler) UpdateMe(c *gin.Context) {}

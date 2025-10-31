@@ -1,5 +1,7 @@
 package user
 
+import "github.com/felipe-coletti/my-first-crud-in-go/internal/user"
+
 type UserRequest struct {
 	DisplayName string `json:"display_name" binding:"required"`
 	Username    string `json:"username" binding:"required"`
@@ -14,7 +16,7 @@ type UserResponse struct {
 	Email       string `json:"email" binding:"required,email"`
 }
 
-func ToUserResponse(domainInterface UserDomainInterface) UserResponse {
+func ToUserResponse(domainInterface user.UserDomainInterface) UserResponse {
 	return UserResponse{
 		ID: "",
 		DisplayName: domainInterface.GetDisplayName(),
