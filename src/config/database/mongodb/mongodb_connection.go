@@ -2,23 +2,29 @@ package mongodb
 
 import (
 	"context"
+	"os"
 
-	"github.com/felipe-coletti/my-first-crud-in-go/src/config/logger"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-func InitMongoDB() {
-	ctx := context.Background()
+var (
+	MONGO_URI     = "MONGO_URI"
+	MONGO_DB_NAME = "MONGO_DB_NAME"
+)
 
-	client, err := mongo.Connect(options.Client().ApplyURI("mongodb://localhost:27017"))
+func NewMongoDB(ctx context.Context) (*mongo.Database, error) {
+	mongoURI := os.Getenv(MONGO_URI)
+	mongoDBName := os.Getenv(MONGO_DB_NAME)
+
+	client, err := mongo.Connect(options.Client().ApplyURI(mongoURI))
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	if err := client.Ping(ctx, nil); err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	logger.Info("Successfully connected")
+	return client.Database(mongoDBName), nil
 }
